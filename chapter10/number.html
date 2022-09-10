@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" onkeydown="checkInt(event);" onkeyup="checkKr(event);" />
+    <script>
+        function checkInt(e) {
+          if (
+              !(
+                  (e.keyCode >= 48 && e.keyCode <= 57) ||
+              e.keyCode == 8 ||
+              e.keyCode == 46 ||
+              e.keyCode == 37 ||
+              e.keyCode == 39 ||
+          )
+      )
+        }
+    </script>
+  </body>
+</html>

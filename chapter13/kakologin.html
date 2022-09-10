@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  </head>
+  <body>
+    <a id="custom-login-btn" href="javascript:kakaoLogin()">
+      <img
+        src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg"
+        width="222"
+      />
+    </a>
+    <button id="logout-btn" style="display: none" onclick="kakaoLogout();">
+      로그아웃
+    </button>
+    <script>
+      Kakao.init("590df79c7e6338bc374c11d5a1035c6d");
+
+      function kakaoLogin() {
+        Kakao.Auth.login({
+          scope: "profile_nickname,account_email",
+
+          success: function () {
+            Kakao.API.request({
+              url: "/v2/user/me",
+              success: (res) => {
+                const kakaoAccount = res.Kakao_account;
+                console.log(kakaoAccount);
+                document.getElementById("custom-login-btn").style.display =
+                  "none";
+                document.getElementById("logout-btn").style.display = "";
+              },
+            });
+          },
+          fail: function (error) {
+            console.log(error);
+          },
+        });
+      }
+
+      function kakaoLogout() {
+        if (!Kakao.Auth.getAccessToken()) {
+          console.log("Not logged in.");
+          return;
+        }
+
+        Kakao.Auth.logout((res) => {
+          console.log(window.Kakao.Auth.getAccessToken());
+          console.log(res);
+          document.getElementById("custom-login-btn").style.display = "";
+          document.getElementById("logout-btn").style.display = "none";
+        });
+      }
+    </script>
+  </body>
+</html>
